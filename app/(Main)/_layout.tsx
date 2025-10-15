@@ -1,9 +1,45 @@
-import { Stack } from "expo-router";
+import { Tabs } from "expo-router";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function MainLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="DashBoardScreen" options={{ headerShown: false }} />
-    </Stack>
+    <Tabs screenOptions={{
+      tabBarActiveTintColor: '#1DB954',
+      tabBarStyle: {
+        backgroundColor: '#000000',
+        borderTopWidth: 0,
+      },
+    }}>
+      <Tabs.Screen
+        name="DashBoardScreen"
+        options={{
+          headerShown: false,
+          tabBarLabel: "Dashboard",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="dashboard" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="NowPlayingScreen"
+        options={{
+          headerShown: false,
+          tabBarLabel: "Now Playing",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="play-arrow" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="SettingsScreen"
+        options={{
+          headerShown: false,
+          tabBarLabel: "Settings",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="settings" size={size} color={color} />
+          ),
+        }}
+      />
+    </Tabs>
   );
 }

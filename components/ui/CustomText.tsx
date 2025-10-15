@@ -1,14 +1,18 @@
-
 import React from 'react';
 import { Text, TextStyle } from 'react-native';
 
 interface CustomTextProps {
   children: React.ReactNode;
   size?: 'title' | 'subtitle' | 'body' | 'button' | 'small';
-  color?: 'white' | 'red' | 'gray' | 'dark';
+  /**
+   * Puede ser un color predefinido ('white', 'red', 'gray', 'dark')
+   * o cualquier string personalizado (#HEX, rgb(), etc.)
+   */
+  color?: 'white' | 'red' | 'gray' | 'dark' | string;
   className?: string;
   bold?: boolean;
 }
+
 export const CustomText = ({ 
   children, 
   size = 'body', 
@@ -16,9 +20,11 @@ export const CustomText = ({
   className = '',
   bold = false
 }: CustomTextProps) => {
+
   const getStyles = (): TextStyle => {
     const styles: TextStyle = {};
-    //Tamaño
+
+    // Tamaño del texto
     switch (size) {
       case 'title':
         styles.fontSize = 36;
@@ -38,7 +44,8 @@ export const CustomText = ({
         styles.fontSize = 14;
         break;
     }
-    //Color
+
+    // Color del texto
     switch (color) {
       case 'white':
         styles.color = '#FFFFFF';
@@ -52,15 +59,22 @@ export const CustomText = ({
       case 'dark':
         styles.color = '#1F2937';
         break;
+      default:
+        // ✅ color personalizado
+        styles.color = color;
+        break;
     }
-    //Negrita
+
+    // Negrita
     if (bold) {
       styles.fontWeight = 'bold';
     }
+
     return styles;
   };
+
   return (
-    <Text style={getStyles()}>
+    <Text className={className} style={getStyles()}>
       {children}
     </Text>
   );
