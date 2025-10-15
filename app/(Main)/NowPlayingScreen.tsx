@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, SafeAreaView } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Feather, FontAwesome, AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Audio } from 'expo-av';
@@ -19,12 +19,31 @@ const playlist = [
     image: 'https://picsum.photos/seed/soundhelix/800',
     uri: { uri: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
   },
+  {
+    title: 'The Road Home',
+    artist: 'Alexander Nakarada',
+    image: 'https://picsum.photos/seed/roadhome/800',
+    uri: { uri: 'https://www.chosic.com/wp-content/uploads/2021/07/The-Road-Home-by-Alexander-Nakarada.mp3' },
+  },
+  {
+    title: 'Adventure',
+    artist: 'Alexander Nakarada',
+    image: 'https://picsum.photos/seed/adventure/800',
+    uri: { uri: 'https://www.chosic.com/wp-content/uploads/2021/08/adventure-by-alexander-nakarada.mp3' },
+  },
 ];
+
+const formatTime = (millis) => {
+    const minutes = Math.floor(millis / 60000);
+    const seconds = ((millis % 60000) / 1000).toFixed(0);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+};
 
 export default function NowPlayingScreen() {
   const sound = useRef(new Audio.Sound());
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
+  const [playbackStatus, setPlaybackStatus] = useState(null);
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
@@ -36,6 +55,7 @@ export default function NowPlayingScreen() {
     await sound.current.unloadAsync();
     try {
       await sound.current.loadAsync(uri);
+      sound.current.setOnPlaybackStatusUpdate(setPlaybackStatus);
     } catch (error) {
       console.log('Error loading sound', error);
     }
@@ -70,6 +90,8 @@ export default function NowPlayingScreen() {
     }
   };
 
+  const progress = playbackStatus?.isLoaded ? (playbackStatus.positionMillis / playbackStatus.durationMillis) * 100 : 0;
+
   return (
     <LinearGradient
         colors={['#4c25b0', '#121212']}
@@ -100,11 +122,11 @@ export default function NowPlayingScreen() {
 
             <View className="w-full">
                 <View className="h-1 bg-gray-600 rounded-full">
-                    <View className="h-1 bg-white rounded-full w-1/2"></View>
+                    <View style={{ height: '100%', backgroundColor: 'white', borderRadius: 999, width: `${progress}%` }}></View>
                 </View>
                 <View className="flex-row justify-between mt-1">
-                    <Text className="text-gray-400 text-xs">0:00</Text>
-                    <Text className="text-gray-400 text-xs">---</Text>
+                    <Text className="text-gray-400 text-xs">{playbackStatus?.isLoaded ? formatTime(playbackStatus.positionMillis) : '0:00'}</Text>
+                    <Text className="text-gray-400 text-xs">{playbackStatus?.isLoaded ? formatTime(playbackStatus.durationMillis) : '--:--'}</Text>
                 </View>
             </View>
 
