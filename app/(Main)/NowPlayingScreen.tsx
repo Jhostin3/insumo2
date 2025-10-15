@@ -6,10 +6,10 @@ import React, { useState, useEffect, useRef } from 'react';
 
 const playlist = [
   {
-    title: 'Arroz',
+    title: 'Remember Me',
     artist: 'Artista Desconocido',
     image: 'https://picsum.photos/seed/nowplaying/800',
-    uri: require('../../components/Music/arroz.mp3'),
+    uri: require('../../components/Music/Remember Me.mp3'),
   },
   {
     title: 'SoundHelix Song 1',
@@ -17,7 +17,6 @@ const playlist = [
     image: 'https://picsum.photos/seed/soundhelix/800',
     uri: { uri: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
   },
-  // Agrega más canciones aquí
 ];
 
 export default function NowPlayingScreen() {
@@ -74,32 +73,28 @@ export default function NowPlayingScreen() {
       >
       <SafeAreaView className="flex-1">
         <View className="flex-1 items-center justify-between p-4">
-            {/* Header */}
             <View className="w-full flex-row justify-between items-center">
                 <TouchableOpacity>
                     <AntDesign name="down" size={24} color="white" />
                 </TouchableOpacity>
-                <Text className="text-white font-bold">Now Playing</Text>
+                <Text className="text-white font-bold">Reproduciendo ahora</Text>
                 <TouchableOpacity>
                     <Feather name="more-vertical" size={24} color="white" />
                 </TouchableOpacity>
             </View>
 
-            {/* Album Art */}
             <Image 
                 source={{ uri: playlist[currentSongIndex].image }} 
                 className="w-80 h-80 rounded-lg shadow-lg"
                 resizeMode="cover"
             />
 
-            {/* Song Info */}
             <View className="w-full">
                 <Text className="text-white text-2xl font-bold">{playlist[currentSongIndex].title}</Text>
                 <Text className="text-gray-400 text-lg">{playlist[currentSongIndex].artist}</Text>
             </View>
 
-            {/* Progress Bar */}
-            <View className="w-full\">\
+            <View className="w-full">
                 <View className="h-1 bg-gray-600 rounded-full">
                     <View className="h-1 bg-white rounded-full w-1/2"></View>
                 </View>
@@ -109,7 +104,6 @@ export default function NowPlayingScreen() {
                 </View>
             </View>
 
-            {/* Controls */}
             <View className="w-full flex-row justify-around items-center">
                 <TouchableOpacity>
                     <FontAwesome name="random" size={24} color="white" />
@@ -128,7 +122,6 @@ export default function NowPlayingScreen() {
                 </TouchableOpacity>
             </View>
 
-             {/* Devices and Lyrics */}
              <View className="w-full flex-row justify-between items-center">
                 <TouchableOpacity>
                     <Feather name="speaker" size={20} color="white" />

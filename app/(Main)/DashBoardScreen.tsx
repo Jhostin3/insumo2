@@ -1,31 +1,29 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
-import { Feather, FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Link } from 'expo-router';
 
-// Component for grid items like "Liked Songs"
 const GridItem = ({ item }) => (
-  <TouchableOpacity className="flex-row items-center bg-gray-800 rounded-md overflow-hidden h-16" style={{ width: '48%' }}>
+  <TouchableOpacity className="flex-row items-center bg-gray-800 rounded-md overflow-hidden h-16 w-[48%]">
     <Image source={{ uri: item.image }} className="w-16 h-16" resizeMode="cover" />
     <Text className="text-white font-bold ml-3 flex-shrink">{item.name}</Text>
   </TouchableOpacity>
 );
 
-// Component for album cards in the horizontal scroll view
 const AlbumCard = ({ album }) => (
     <TouchableOpacity className="mr-4 w-40">
         <Image source={{ uri: album.image }} className="w-40 h-40 rounded-md" resizeMode="cover" />
         <Text className="text-white font-bold mt-2" numberOfLines={1}>{album.title}</Text>
-        <Text className="text-gray-400 text-sm mt-1" numberOfLines={1}>Album • {album.artist}</Text>
+        <Text className="text-gray-400 text-sm mt-1" numberOfLines={1}>Álbum • {album.artist}</Text>
     </TouchableOpacity>
 )
 
 export default function DashBoardScreen() {
     const gridData = [
-        { name: 'Liked Songs', image: 'https://picsum.photos/seed/liked/200' },
-        { name: 'Rock Mix', image: 'https://picsum.photos/seed/rock/200' },
+        { name: 'Canciones que te gustan', image: 'https://picsum.photos/seed/liked/200' },
+        { name: 'Mix de Rock', image: 'https://picsum.photos/seed/rock/200' },
         { name: 'Popcorn', image: 'https://picsum.photos/seed/popcorn/200' },
-        { name: 'Daily Mix 2', image: 'https://picsum.photos/seed/daily/200' },
+        { name: 'Mix Diario 2', image: 'https://picsum.photos/seed/daily/200' },
     ];
 
     const trendingAlbums = [
@@ -51,9 +49,8 @@ export default function DashBoardScreen() {
         className="flex-1" 
         contentContainerStyle={{ padding: 16, paddingBottom: 16 }}
       >
-        {/* Header */}
         <View className="flex-row justify-between items-center mt-8 mb-4">
-            <Text className="text-white text-3xl font-bold">Good afternoon</Text>
+            <Text className="text-white text-3xl font-bold">Buenas tardes</Text>
             <View className="flex-row items-center space-x-5">
                 <TouchableOpacity>
                     <Feather name="bell" size={24} color="white" />
@@ -72,14 +69,12 @@ export default function DashBoardScreen() {
             </View>
         </View>
 
-        {/* Playlist Grid */}
         <View className="flex-row flex-wrap justify-between gap-y-2 mb-8">
             {gridData.map(item => <GridItem key={item.name} item={item} />)}
         </View>
 
-        {/* Recently Played */}
         <View className="mb-8">
-            <Text className="text-white text-2xl font-bold mb-4">Recently Played</Text>
+            <Text className="text-white text-2xl font-bold mb-4">Escuchado recientemente</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {recentlyPlayed.map(item => (
                     <TouchableOpacity key={item.name} className="mr-4 w-32 items-center">
@@ -90,9 +85,8 @@ export default function DashBoardScreen() {
             </ScrollView>
         </View>
 
-        {/* Trending Albums Section */}
         <View>
-            <Text className="text-white text-2xl font-bold mb-4">Trending albums for you</Text>
+            <Text className="text-white text-2xl font-bold mb-4">Álbumes en tendencia para ti</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {trendingAlbums.map(album => <AlbumCard key={album.title} album={album} />)}
             </ScrollView>

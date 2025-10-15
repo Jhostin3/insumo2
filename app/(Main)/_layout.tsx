@@ -14,7 +14,7 @@ export default function MainLayout() {
         name="DashBoardScreen"
         options={{
           headerShown: false,
-          tabBarLabel: "Dashboard",
+          tabBarLabel: "Inicio",
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="dashboard" size={size} color={color} />
           ),
@@ -24,7 +24,7 @@ export default function MainLayout() {
         name="NowPlayingScreen"
         options={{
           headerShown: false,
-          tabBarLabel: "Now Playing",
+          tabBarLabel: "Reproduciendo",
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="play-arrow" size={size} color={color} />
           ),
@@ -34,7 +34,7 @@ export default function MainLayout() {
         name="SettingsScreen"
         options={{
           headerShown: false,
-          tabBarLabel: "Settings",
+          tabBarLabel: "Ajustes",
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="settings" size={size} color={color} />
           ),

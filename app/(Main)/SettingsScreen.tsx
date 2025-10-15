@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
-import { Feather, FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 const SettingsItem = ({ icon, title, subtitle }) => (
     <TouchableOpacity className="flex-row items-center justify-between p-4 border-b border-gray-800">
@@ -18,7 +18,6 @@ export default function SettingsScreen() {
   return (
     <View className="flex-1 bg-[#121212]">
       <ScrollView className="flex-1">
-        {/* User Profile Section */}
         <View className="p-4 flex-row items-center">
             <Image 
                 source={{ uri: 'https://picsum.photos/seed/profile/200' }} 
@@ -28,19 +27,18 @@ export default function SettingsScreen() {
             <View className="ml-4">
                 <Text className="text-white text-2xl font-bold">Jhostin Quijije</Text>
                 <TouchableOpacity>
-                    <Text className="text-gray-400">View Profile</Text>
+                    <Text className="text-gray-400">Ver perfil</Text>
                 </TouchableOpacity>
             </View>
         </View>
 
-        {/* Settings List */}
-        <SettingsItem icon="user" title="Account" subtitle="Privacy, security, number" />
-        <SettingsItem icon="save" title="Data Saver" subtitle="Audio quality" />
-        <SettingsItem icon="play-circle" title="Playback" subtitle="Gapless, normalization" />
-        <SettingsItem icon="smartphone" title="Devices" subtitle="Connect to a device" />
-        <SettingsItem icon="bell" title="Notifications" subtitle="Music, podcasts & shows" />
-        <SettingsItem icon="globe" title="Language" subtitle="English" />
-        <SettingsItem icon="info" title="About" subtitle="Terms, privacy policy" />
+        <SettingsItem icon="user" title="Cuenta" subtitle="Privacidad, seguridad, número" />
+        <SettingsItem icon="save" title="Ahorro de datos" subtitle="Calidad de audio" />
+        <SettingsItem icon="play-circle" title="Reproducción" subtitle="Sin pausas, normalización" />
+        <SettingsItem icon="smartphone" title="Dispositivos" subtitle="Conectar a un dispositivo" />
+        <SettingsItem icon="bell" title="Notificaciones" subtitle="Música, podcasts y programas" />
+        <SettingsItem icon="globe" title="Idioma" subtitle="Español" />
+        <SettingsItem icon="info" title="Acerca de" subtitle="Términos, política de privacidad" />
 
       </ScrollView>
     </View>
