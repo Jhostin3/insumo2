@@ -4,24 +4,52 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Audio } from 'expo-av';
 import React, { useState, useEffect, useRef } from 'react';
 
+const playlist = [
+  {
+    title: 'Arroz',
+    artist: 'Artista Desconocido',
+    image: 'https://picsum.photos/seed/nowplaying/800',
+    uri: require('../../components/Music/arroz.mp3'),
+  },
+  {
+    title: 'SoundHelix Song 1',
+    artist: 'SoundHelix',
+    image: 'https://picsum.photos/seed/soundhelix/800',
+    uri: { uri: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+  },
+  // Agrega más canciones aquí
+];
+
 export default function NowPlayingScreen() {
   const sound = useRef(new Audio.Sound());
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentSongIndex, setCurrentSongIndex] = useState(0);
 
   useEffect(() => {
-    const loadSound = async () => {
-      try {
-        await sound.current.loadAsync(require('../../components/Music/arroz.mp3'));
-      } catch (error) {
-        console.log('Error loading sound', error);
-      }
-    };
-    loadSound();
+    loadSound(playlist[currentSongIndex].uri);
+  }, [currentSongIndex]);
 
-    return () => {
-      sound.current.unloadAsync();
-    };
-  }, []);
+  const loadSound = async (uri) => {
+    await sound.current.unloadAsync();
+    try {
+      await sound.current.loadAsync(uri);
+    } catch (error) {
+      console.log('Error loading sound', error);
+    }
+  };
+  
+  const playNext = () => {
+    const nextIndex = (currentSongIndex + 1) % playlist.length;
+    setCurrentSongIndex(nextIndex);
+    setIsPlaying(false);
+  };
+
+  const playPrevious = () => {
+    const prevIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+    setCurrentSongIndex(prevIndex);
+    setIsPlaying(false);
+  };
+
 
   const togglePlayback = async () => {
     try {
@@ -59,19 +87,19 @@ export default function NowPlayingScreen() {
 
             {/* Album Art */}
             <Image 
-                source={{ uri: 'https://picsum.photos/seed/nowplaying/800' }} 
+                source={{ uri: playlist[currentSongIndex].image }} 
                 className="w-80 h-80 rounded-lg shadow-lg"
                 resizeMode="cover"
             />
 
             {/* Song Info */}
             <View className="w-full">
-                <Text className="text-white text-2xl font-bold">Arroz</Text>
-                <Text className="text-gray-400 text-lg">Artista Desconocido</Text>
+                <Text className="text-white text-2xl font-bold">{playlist[currentSongIndex].title}</Text>
+                <Text className="text-gray-400 text-lg">{playlist[currentSongIndex].artist}</Text>
             </View>
 
             {/* Progress Bar */}
-            <View className="w-full">
+            <View className="w-full\">\
                 <View className="h-1 bg-gray-600 rounded-full">
                     <View className="h-1 bg-white rounded-full w-1/2"></View>
                 </View>
@@ -86,13 +114,13 @@ export default function NowPlayingScreen() {
                 <TouchableOpacity>
                     <FontAwesome name="random" size={24} color="white" />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={playPrevious}>
                     <AntDesign name="stepbackward" size={32} color="white" />
                 </TouchableOpacity>
                 <TouchableOpacity className="bg-white rounded-full p-4" onPress={togglePlayback}>
                     <FontAwesome name={isPlaying ? "pause" : "play"} size={32} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={playNext}>
                     <AntDesign name="stepforward" size={32} color="white" />
                 </TouchableOpacity>
                 <TouchableOpacity>
