@@ -3,6 +3,7 @@ import { Feather, FontAwesome, AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Audio } from 'expo-av';
 import React, { useState, useEffect, useRef } from 'react';
+import { useRouter } from "expo-router";
 
 const playlist = [
   {
@@ -23,6 +24,7 @@ export default function NowPlayingScreen() {
   const sound = useRef(new Audio.Sound());
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     loadSound(playlist[currentSongIndex].uri);
@@ -74,7 +76,7 @@ export default function NowPlayingScreen() {
       <SafeAreaView className="flex-1">
         <View className="flex-1 items-center justify-between p-4">
             <View className="w-full flex-row justify-between items-center">
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => router.back()}>
                     <AntDesign name="down" size={24} color="white" />
                 </TouchableOpacity>
                 <Text className="text-white font-bold">Reproduciendo ahora</Text>
@@ -109,13 +111,13 @@ export default function NowPlayingScreen() {
                     <FontAwesome name="random" size={24} color="white" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={playPrevious}>
-                    <AntDesign name="stepbackward" size={32} color="white" />
+                    <AntDesign name="arrow-left" size={32} color="white" />
                 </TouchableOpacity>
                 <TouchableOpacity className="bg-white rounded-full p-4" onPress={togglePlayback}>
                     <FontAwesome name={isPlaying ? "pause" : "play"} size={32} color="black" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={playNext}>
-                    <AntDesign name="stepforward" size={32} color="white" />
+                    <AntDesign name="arrow-right" size={32} color="white" />
                 </TouchableOpacity>
                 <TouchableOpacity>
                     <Feather name="repeat" size={24} color="white" />
