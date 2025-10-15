@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Audio } from 'expo-av';
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const playlist = [
   {
@@ -25,6 +26,7 @@ export default function NowPlayingScreen() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     loadSound(playlist[currentSongIndex].uri);
@@ -73,7 +75,7 @@ export default function NowPlayingScreen() {
         colors={['#4c25b0', '#121212']}
         className="flex-1"
       >
-      <SafeAreaView className="flex-1">
+      <View style={{ flex: 1, paddingTop: insets.top, paddingBottom: insets.bottom, paddingLeft: insets.left, paddingRight: insets.right }}>
         <View className="flex-1 items-center justify-between p-4">
             <View className="w-full flex-row justify-between items-center">
                 <TouchableOpacity onPress={() => router.back()}>
@@ -134,7 +136,7 @@ export default function NowPlayingScreen() {
             </View>
 
         </View>
-        </SafeAreaView>
+        </View>
     </LinearGradient>
   );
 }

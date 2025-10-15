@@ -1,5 +1,6 @@
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import { Feather } from '@expo/vector-icons';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const SettingsItem = ({ icon, title, subtitle }) => (
     <TouchableOpacity className="flex-row items-center justify-between p-4 border-b border-gray-800">
@@ -15,8 +16,17 @@ const SettingsItem = ({ icon, title, subtitle }) => (
 )
 
 export default function SettingsScreen() {
+  const insets = useSafeAreaInsets();
+
   return (
-    <View className="flex-1 bg-[#121212]">
+    <View style={{
+      flex: 1,
+      backgroundColor: '#121212',
+      paddingTop: insets.top,
+      paddingBottom: insets.bottom,
+      paddingLeft: insets.left,
+      paddingRight: insets.right
+    }}>
       <ScrollView className="flex-1">
         <View className="p-4 flex-row items-center">
             <Image 
